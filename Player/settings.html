@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--<link rel="stylesheet" href="../slider.css">-->
+    <style>
+        body {color:yellow;font-size:large;padding-left:15px;user-select: none;}
+        a {color:khaki;} a:hover {color:white;}
+        .cssbutton {
+            font-size: 18px; font-weight:bold; border-radius: 4px;
+            color: white; background-color: green;
+            margin: 2px 4px 2px 4px; padding: 2px 2px 2px 2px;
+            margin-bottom:4px; display:inline-block; text-wrap:nowrap;
+        }
+        .cssbutton:hover {
+            color:black; background-color:lightgreen;
+        }
+        .cssDropDown {
+            color:white;cursor:pointer;font-size:16px;
+            background-color:darkolivegreen;border-radius:4px;
+            padding:2px 2px 2px 2px;margin:0px;
+            outline:none; margin-bottom:4px; 
+        }
+        .cssDropDown:hover {
+            color:black; background-color:lightgreen;
+        }
+    </style>
+</head>
+<body id="body" style="background-color:rgb(90, 90, 90);">
+
+    <h3>m3u8 Sniffer Video Settings / Error Page &nbsp;<!--style="float:right;"-->
+        <span id="helpButton" class="cssbutton" 
+            title="Shows a more detailed explanation of the extension and options">
+            <a id="helpLink" href="https://SnifferTV.com/docs/playerdocs.html" 
+                class="cssbutton" style="text-decoration:none;margin:0px;padding:0px;" target="_blank"
+                title="Open the Sniffer integrated video player documentation (a separate web page)">
+                &nbsp;&nbsp;&nbsp;Help&nbsp;&nbsp;&nbsp;
+            </a>
+        </span>&nbsp;&nbsp;&nbsp;
+    </h3>
+
+    <div id="errorDiv" style="display:none;">
+        <span style="color:khaki;font-weight:bold;">
+            Video stream error = &nbsp;
+            <span id="errorText" style="color:khaki;"></span>
+        </span><br>
+        <span id="errorCause">Likely causes include bad / stale m3u8 or CORS<br></span>
+        <span id="autoReloadOffSpan" style="display:none;max-width:525px;"><br>
+            Auto Site Reload is curently set to "Off". You can reload the Site manually to try to
+            get a "fresh" m3u8 link and try playing it again, or you can set the Auto Site Reload to 
+            the desired option below.<br><br>
+        </span>
+        <span id="autoReloadSpan" style="color:white;font-size:18px;font-weight:bold;display:none;">
+            <br>Site will automatically reload in&nbsp;
+            <span id="reloadTime"></span>&nbsp; seconds...<br><br>
+            <span id="cancelAutoReload" class="cssbutton">
+                &nbsp;&nbsp;&nbsp;Cancel Auto Reload&nbsp;&nbsp;
+            </span><br>
+        </span><br>
+    </div>
+
+    <span id="siteParamDiv" style="display:none;">
+        Source Site Home = <a id="siteHome" href=""></a><br>
+        Source Site Page = <a id="siteParam" href=""></a><br><br>
+    </span>
+
+    <div style="word-break:break-all;display:none;">
+        Source m3u8 = <a id="firstM3u8" href=""></a><br>
+    </div>
+
+    <span style="color:khaki;display:inline-block;max-width:525px;"> <!--60%-->
+        Hint: You can access the first and last m3u8 URLs of the Player and Settings 
+        pages using the Sniffer extention's popup window.<br>
+    </span><br><br>
+
+    <span style="display:inline-block;">On click do
+        <select id="clickOptions" class="cssDropDown">
+            <option class="cssDropDown" value="Nothing" selected>Nothing</option>
+            <option class="cssDropDown" value="PausePlay">Pause / Play</option>
+            <option class="cssDropDown" value="MuteUnmute">Mute / Unmute</option>
+        </select>&nbsp;&nbsp;&nbsp;
+    </span>
+    <span style="display:inline-block;">On double click do
+        <select id="dblClickOptions" class="cssDropDown">
+            <option class="cssDropDown" value="Nothing">Nothing</option>
+            <option class="cssDropDown" value="PausePlay">Pause / Play</option>
+            <option class="cssDropDown" value="MuteUnmute" selected>Mute / Unmute</option>
+            <option class="cssDropDown" value="Fullscreen">Fullscreen</option>
+            <option class="cssDropDown" value="OptionsPage">Options Page</option>
+        </select>&nbsp;&nbsp;&nbsp;
+    </span><br><br>
+
+    <span style="display:inline-block;">Video Stall timeout:&nbsp;
+        <select id="stallTimeout" class="cssDropDown">
+            <option class="cssDropDown" value="Off">Off</option>
+            <option class="cssDropDown" value="10">10</option>
+            <option class="cssDropDown" value="15">15</option>
+            <option class="cssDropDown" value="20" selected>20</option>
+            <option class="cssDropDown" value="30">30</option>
+            <option class="cssDropDown" value="45">45</option>
+            <option class="cssDropDown" value="60">60</option>
+        </select>&nbsp;&nbsp;Sec
+    </span>&nbsp;&nbsp;&nbsp;&nbsp;
+    <span style="display:inline-block;">Auto Reload wait:&nbsp;
+        <select id="autoReloadTimeout" class="cssDropDown">
+            <option class="cssDropDown" value="Off" selected>Off</option>
+            <option class="cssDropDown" value="1">1</option>
+            <option class="cssDropDown" value="3">3</option>
+            <option class="cssDropDown" value="5">5</option>
+            <option class="cssDropDown" value="10">10</option>
+            <option class="cssDropDown" value="20">20</option>
+            <option class="cssDropDown" value="30">30</option>
+        </select>&nbsp;&nbsp;Sec
+    </span><br><br>
+<!--
+    Show video channel tooltips: &nbsp;
+    <label class="switch">
+        <input type="checkbox" id="showChannelTooltips">
+        <div class="slider round"></div>
+    </label>&nbsp;<br><br>
+-->
+    <span id="copyM3u8" class="cssbutton"
+        title="Copy the FIRST m3u8 URL to the clipboard">
+        &nbsp;&nbsp;&nbsp;Copy m3u8&nbsp;&nbsp;&nbsp;
+    </span><span 
+        id="reloadSite" class="cssbutton" style="display:none;"
+        title="Reload the source web site to sniff it again">
+        &nbsp;&nbsp;&nbsp;Reload Site&nbsp;&nbsp;&nbsp;
+    </span>
+    <span 
+        id="reloadVideoPlayer" class="cssbutton"
+        title="Reload the m3u8 video player">
+        &nbsp;&nbsp;&nbsp;Reload Video Player&nbsp;&nbsp;&nbsp;
+    </span>
+
+    <script type="module" src="settings.js"></script>
+</body>
+</html>
