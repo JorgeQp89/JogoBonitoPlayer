@@ -494,4 +494,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (response) sendResponse(response);
     //return true; // Needed if sendResponse is called asynclly
 });
-//#endregion
+//#endregion 
+// Obtener el iframe del reproductor
+const videoPlayer = document.getElementById('video-player');
+
+// Detectar la URL actual del sitio web
+chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+  const currentUrl = tabs[0].url;
+
+  // Verificar si la URL pertenece al sitio web JogoBonito
+  if (currentUrl.includes('jogobonito')) {
+    // Cargar la URL en el reproductor SIN mostrarla
+    videoPlayer.src = currentUrl;
+  } else {
+    // Mostrar un mensaje si la URL no es válida
+    videoPlayer.src = 'about:blank';
+    alert('Esta extensión solo funciona en el sitio web JogoBonito.');
+  }
+});
