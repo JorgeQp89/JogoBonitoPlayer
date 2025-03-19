@@ -1,0 +1,54 @@
+<!-- overlay.html -->
+<div id="m3u8OverlayDiv" class="overlayDiv" style="display:none;"> 
+    <span id="titleSpan" class="titleSpan" style="padding-left:6px;">
+        <a id="titleM3u8Link" target="_self" href="" class="m3u8Link">
+            <span id="titleText">m3u8 Sniffer</span>
+            <span style="padding-right:3px;">[<span id="tabM3u8Count"></span>]</a></span>
+    </span>
+    <span id="m3u8LinkSpan" style="display:none;"
+        title="Show First / Last m3u8 video link (Alt Shift F / L)">
+        <select id="showFirstLast" class="overlayDD">
+            <option class="overlayDD" value="first" selected>First</option>
+            <option class="overlayDD" value="last">Last</option>
+        </select>&nbsp;
+        <a id="m3u8Link" target="_self" href="${requestM3u8}" class="m3u8Link"
+            title="Click or right click to open the m3u8 URL (Alt Enter)">
+            <span id="m3u8LinkText" class="m3u8Link">${requestM3u8}</span>
+        </a>&nbsp;
+    </span>
+    <span class="buttonsSpan noWrap" style="white-space:nowrap;">
+        <span id="m3u8HideSpan" style="margin-left:2px;margin-right:0px;">
+            <span id="m3u8HideButton" class="olButton" 
+                title="Shrink the overlay to the upper right corner (Alt &lt;)">
+                &nbsp;&nbsp;&nbsp;&lt;&nbsp;&nbsp;
+            </span>
+        </span>
+        <span id="m3u8ExpandOverlay" class="olButton noWrap"
+            title="Expand to show full overlay details (Alt +)">
+            &nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;
+        </span>
+        <span id="m3u8CopyButton" class="olButton noWrap"
+            title="Copy the m3u8 URL to the clipboard (Alt C)">
+            &nbsp;&nbsp;Copy&nbsp;
+        </span>
+<!--
+        <span id="m3u8PlayButton" class="olButton noWrap"
+            title="Play the m3u8 video in the current tab (Alt P)">
+            &nbsp;&nbsp;Play&nbsp;
+        </span>
+-->
+        <span id="m3u8PlayButton" class="olButton noWrap"
+            title="Play the m3u8 video in the current tab (Alt P, can use Ctrl or Shift for new tab/window)">
+            <a id="m3u8PlayLink" href="" class="cssbutton" style="color:white;text-decoration:none;">
+                &nbsp;&nbsp;Play&nbsp;
+            </a>
+        </span>
+        <span id="m3u8CloseButton" class="olButton hoverRed noWrap"
+            title="Close the m3u8 overlay for this page (Alt X)">
+            &nbsp;&nbsp;X&nbsp;&nbsp;</span><span
+            id="m3u8HideRightButton" class="olButton noWrap"
+            title="Shrink the overlay to the upper right corner (Alt &gt;)">
+            &nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;
+        </span>
+    </span><br>
+</div>

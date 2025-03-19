@@ -1,0 +1,61 @@
+/* overlay.css */
+
+.overlayDiv {
+    position:fixed;font-size:16px;word-break:break-all;text-align:left;
+    top:0px;/*left:0px;*//*right:0px;*/margin:1% 2%;user-select:none;
+    z-index:32111;background-color:lightgray;padding:4px;line-height:1.5;
+    border:4px solid cadetblue;color:green;min-width:94%;max-width:94%;
+    zoom:100%;
+}
+/* width: 600px;margin: 5% auto;left: 0;right: 0; */
+
+.titleSpan {
+    color:green;
+    font-weight:bold;
+    user-select:none;
+    margin-right:4px;
+    text-decoration:none;
+}
+.overlayDD {
+    color:white;cursor:pointer;font-size:12px;
+    background-color:darkolivegreen;border-radius:4px;
+    padding:2px 2px 2px 2px;margin:0px; /*float:right;*/
+    outline:none;
+}
+.buttonsSpan {
+    float:right;
+    display:block;
+    white-space:nowrap;
+}
+.olButton {
+    color:white;cursor:pointer;font-size:14px;
+    background-color:darkolivegreen;border-radius:4px;
+    padding:2px 2px 2px 2px;margin-right:4px; /*float:right;*/
+}
+.olButton:hover {
+    background-color:green;
+}
+.hoverRed:hover {
+    background-color:red;
+}
+.olClicked {
+    /*background-color:yellowgreen;*/ /*forestgreen*/
+    color:forestgreen; /*forestgreen*/
+}
+.olClicked:hover {
+    background-color:yellowgreen ; /*forestgreen*/
+}
+.m3u8LinkSpan {
+    color:darkgreen;
+}
+.m3u8Link {
+    color:green;
+    text-decoration:none;
+}
+.m3u8Link:hover {
+    color:blue;
+    text-decoration: underline;
+}
+.noWrap {
+    white-space:nowrap;
+}

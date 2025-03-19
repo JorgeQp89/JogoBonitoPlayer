@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="slider.css">
+</head>
+<body id="popupBodyId" class="body unselectable">
+    <div>
+        <span class="title">HLS m3u8 Link Sniffer & Player</span>
+
+        <span class="highlighted buttons unselectable" style="padding-right:3px;">
+            <span id="helpButton" class="cssbutton"
+                title="Shows a more detailed explanation of the extension and options (Alt A)">
+                &nbsp;&nbsp;&nbsp;About&nbsp;&nbsp;
+            </span>
+            <span id="openDocsButton" class="cssbutton" 
+                title="Open the Sniffer TV full documentation (external web site) (F1)">
+                <a id="openDocsLink" href="http://SnifferTV.com/docs" class="cssbutton" target="_blank"
+                    style="color:white;text-decoration:none;margin-left:1px;margin-right:2px;">
+                    &nbsp;&nbsp;Help&nbsp;</a>
+            </span>
+            <span id="refreshButton" class="cssbutton"
+                title="Refresh this popup with the last m3u8 URL found on the current tab (Alt R)">
+                &nbsp;&nbsp;&nbsp;&nbsp;Refresh&nbsp;&nbsp;&nbsp;
+            </span>
+        </span>&nbsp;
+    </div>
+    <p>
+        This extension intercepts the visited web page's network requests and
+        identifies all m3u8 URLs. When a m3u8 URL request is found, it is displayed 
+        in a box that overlays the visited page. Also, you can open this extension 
+        popup to view and play the first and last m3u8 URLs found.
+    </p>
+
+    <div id="sliders" class="unselectable">
+        <span class="highlighted"
+            title="Enable/Disable all m3u8 URL Sniffing functionalities (Alt S)">
+            m3u8 Sniffing: 
+            <label class="switch">
+                <input type="checkbox" id="m3u8SniffingEnabled">
+                <div class="slider round"></div>
+            </label>
+        </span>&nbsp;
+        <span class="highlighted"
+            title="Enable / Disable showing m3u8 overlays web pages, aka URL Injection (Alt O)">
+            m3u8 Overlays: 
+            <label class="switch">
+                <input type="checkbox" id="m3u8InjectionEnabled">
+                <div class="slider round"></div>
+            </label>
+        </span>&nbsp;&nbsp;
+
+        <span class="highlighted buttons unselectable" style="padding-right:2px;">
+            <span id="copyFirstButton" class="cssbutton"
+                title="Copy the FIRST m3u8 URL to the clipboard (Alt C)">
+                &nbsp;&nbsp;Copy First&nbsp;
+            </span>
+            <span id="copyLastButton" class="cssbutton"
+                title="Copy the LAST m3u8 URL to the clipboard (Alt D)">
+                &nbsp;&nbsp;Copy Last&nbsp;&nbsp;
+            </span>
+        </span>
+    </div>
+
+    <br>
+    <div class="unselectable">    
+        <span class="highlighted"
+            title="Select which sites should automatically play the found m3u8 link (Alt Shift A / N / M)">
+            m3u8 Auto Play: 
+            <select id="autoPlayEnabled" class="cssDropDown">
+                <option class="cssDropDown" value="All">All</option>
+                <option class="cssDropDown" value="None" selected>None</option>
+                <option class="cssDropDown" value="Match">Match</option>
+            </select>&nbsp;
+            <span id="showConfigOptionsButton" class="cssbutton unselectable"
+                title="Show / Hide the additional Sniffer configuration options (Alt E)">
+                &nbsp;&nbsp;&nbsp;Edit Config Options&nbsp;&nbsp;&nbsp;
+            </span>
+            <span id="hideConfigOptionsButton" class="cssbutton unselectable"
+                style="display:none;" title="Show additional configuration options (Alt H)">
+                &nbsp;&nbsp;&nbsp;Hide Config Options&nbsp;&nbsp;
+            </span>
+        </span>&nbsp;
+
+        <span class="highlighted buttons unselectable" style="padding-right:2px;">
+            <span id="playFirstButton" class="cssbutton" 
+                title="Play the FIRST m3u8 URL (Alt P, can use Ctrl or Shift for new tab/window)">
+                <a id="playFirstLink" href="" class="cssbutton" 
+                    style="color:white;text-decoration:none;margin-left:1px;margin-right:2px;">
+                    &nbsp;&nbsp;Play First&nbsp;</a>
+            </span>
+            <span id="playLastButton" class="cssbutton" 
+                title="Play the LAST m3u8 URL (Alt Q, can use Ctrl or Shift for new tab/window)">
+                <a id="playLastLink" href="" class="cssbutton" 
+                    style="color:white;text-decoration:none;margin:0px;margin-left:4px;padding-right:2px;">
+                    &nbsp;Play Last&nbsp;&nbsp;</a>
+            </span>
+        </span>
+    </div><br>
+    
+    <div id="configOptionsDiv" class="unselectable" style="display:none;">
+        <span class="highlighted" 
+            title='Text fragments (seperated by spaces) to match in URLs when Auto Play is set to "Match"'>
+            Match Auto Play if the site's URLs contains any of these text fragments:
+        </span><br>
+        <textarea id="autoPlayText" rows="5" wrap="off" spellcheck="false"
+            placeholder="Examples: cbsnews whatever.com/cnn (Separated by white space)"
+            style="width:98%;background-color:rgb(220, 219, 219);
+                font-size:large;font-weight:bold;">
+        </textarea><br><br>
+        <span class="highlighted" title="Use Link Handler:">
+            <span title="Enable / Disable the use keyboard shortcuts">
+                Use Keyboard Shortcuts:
+                <label class="switch">
+                    <input type="checkbox" id="useKeyboardShortcuts">
+                    <div class="slider round"></div>
+                </label>&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span>
+        <span class="highlighted" title="Use Link Handler:">
+            <span title="Enable / Disable this extension's handling (play) of direct m3u8 URLs (Alt D)">
+                Handle (play) direct m3u8 URLs:
+                <label class="switch">
+                    <input type="checkbox" id="directM3u8Enabled">
+                    <div class="slider round"></div>
+                </label>&nbsp;
+            </span>
+        </span>
+    </div>
+
+    <div id="snifferResultsDiv">
+        <span class="results" title="Link to the current tab's source web page (Alt U)">
+            Site URL: <!--<span id="firstUrlDiv" class="nobreak" >Loading ...</span>-->
+            <a id="firstUrlLink" href="">
+                <span id="firstUrlDiv" class="m3u8 nobreak">Loading ...</span>
+            </a>
+        </span><br><br>
+        <span class="results" 
+            title="First m3u8 found on site, click the link to open it in a new tab (Alt F)">
+            <!--First m3u8: <span id="firstM3u8Div" class="nobreak" >Loading ...</span>-->
+            First m3u8<span id="tabIndexSpan" title="Source tab index in window (for testing/debugging)"></span>:
+            <!--<span id="firstM3u8Div" class="nobreak">Loading ...</span>-->
+            <a id="firstM3u8Link" href="">
+                <span id="firstM3u8Div" class="m3u8 nobreak">Loading ...</span>
+            </a>
+        </span><br><br>
+        <span class="results" 
+            title="Last m3u8 found on site, click the link to open it in a new tab (Alt L)">
+            Last m3u8<span id="m3u8CountSpan" title="Count of m3u8 web requests found on source site"></span>:
+            <!--<span id="lastM3u8Div" class="nobreak">Loading ...</span>-->
+            <a id="lastM3u8Link" href="">
+                <span id="lastM3u8Div" class="m3u8 nobreak">Loading ...</span>
+            </a>
+    
+        </span><br><br>
+
+        <div>Note: Click or use shift, control, or right click to open the URLs 
+            from this popup window. If the link fails to open properly, there might 
+            be permissions issues that prevent it from being opened from outside the 
+            original web page. Check the Dev Tools Network activity if in doubt.
+        </div>  
+    </div>
+    <script type="module" src="popup.js"></script>
+</body>
+</html>
